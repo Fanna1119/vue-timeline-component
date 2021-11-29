@@ -5,6 +5,8 @@
 
 ## [Demo](https://0xdv.github.io/vue-timeline-component/index.html)
 
+## vue 3 version using vite
+
 ## Install
 
 ```js

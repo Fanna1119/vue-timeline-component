@@ -1,4 +1,4 @@
-import * as d3 from 'd3'
+import { zoom, zoomIdentity } from 'd3'
 
 export default (config) => {
     let {
@@ -7,15 +7,15 @@ export default (config) => {
         draw,
     } = config
 
-    return d3.zoom()
+    return zoom()
         //.translateExtent([[ -1200, -700 ], [ 800, 800 ]])
-        .on('zoom', () => {
-            let { k, x, y } = d3.event.transform
+        .on('zoom', (e) => {
+            let { k, x, y } = e.transform
 
-            let scale = d3.zoomIdentity
-                            .translate(x,y)
-                            .scale(k)
-                            .rescaleX(timeScale)
+            let scale = zoomIdentity
+                .translate(x, y)
+                .scale(k)
+                .rescaleX(timeScale)
 
             view.call(draw(scale))
         })

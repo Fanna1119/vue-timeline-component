@@ -1,25 +1,27 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+  <div>
+    <VueTimelineVue :data="data" />
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
+import VueTimelineVue from './components/VueTimeline.vue';
 
-export default {
-  name: 'App',
-  components: {
-  }
-}
+const data = ref([{
+  name: "event 1",
+  start: new Date(2020, 1, 1),
+  end: new Date(2020, 1, 4),
+}, {
+  name: "event 2",
+  start: new Date(2020, 1, 2),
+  end: new Date(2020, 1, 5),
+}, {
+  name: "event 3",
+  start: new Date(2020, 1, 3),
+  end: new Date(2020, 1, 10),
+}])
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

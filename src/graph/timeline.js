@@ -1,4 +1,4 @@
-import * as d3 from 'd3'
+import { scaleTime, min, max } from 'd3'
 
 import events from './events'
 import axis from './axis'
@@ -10,14 +10,14 @@ import layout from './layout'
 
 export default (config) => {
     function init(selection) {
-        console.log('timeline init')
+        // console.log('timeline init')
         selection.selectAll('svg').remove()
 
         let data = selection.data()
 
         let events = data[0]
         layout.generate(events)
-        console.table(events)
+        // console.table(events)
 
         let {
             viewWidth = 800,
@@ -36,23 +36,23 @@ export default (config) => {
         let height = viewHeight - margin.top - margin.bottom
 
         let svg = selection
-                    .append('svg')
-                    .datum(data)
-                    .attr('width', width + margin.right + margin.left)
-                    .attr('height', height + margin.top + margin.bottom)
+            .append('svg')
+            .datum(data)
+            .attr('width', width + margin.right + margin.left)
+            .attr('height', height + margin.top + margin.bottom)
 
-        let timeScale = d3.scaleTime()
+        let timeScale = scaleTime()
             .domain([
-                d3.min(events.map(e => e.start)),
-                d3.max(events.map(e => e.end))
+                min(events.map(e => e.start)),
+                max(events.map(e => e.end))
             ])
             .range([0, width])
 
         let graph = svg
-                    .append('g')
-                    .classed('graph', true)
-                    .attr('transform', `translate(${margin.left},${margin.top})`)
-        
+            .append('g')
+            .classed('graph', true)
+            .attr('transform', `translate(${margin.left},${margin.top})`)
+
         let view = graph.append('g')
             .classed('view', true)
 
@@ -61,17 +61,17 @@ export default (config) => {
             view,
             draw,
         }))
-        
+
         view.call(draw(timeScale, onEventClick, height, showCursor))
     }
 
     function chart(selection) {
-        console.log('timeline constructor')
+        // console.log('timeline constructor')
         chart._init = () => init(selection)
         chart._init()
 
         if (config.widthResizable) {
-            global.addEventListener('resize', chart._init, true)
+            window.addEventListener('resize', chart._init, true)
         }
     }
 
